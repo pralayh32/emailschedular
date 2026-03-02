@@ -12,4 +12,6 @@ export const config = {
   maxEmailsPerHour: parseInt(process.env.MAX_EMAILS_PER_HOUR || "200", 10),
   workerConcurrency: parseInt(process.env.WORKER_CONCURRENCY || "5", 10),
   emailDelayMs: parseInt(process.env.EMAIL_DELAY_MS || "2000", 10),
+  backendUrl: process.env.BACKEND_URL || "http://localhost:4000",
+  frontendUrl: process.env.FRONTEND_URL || "http://localhost:3000",
 };
