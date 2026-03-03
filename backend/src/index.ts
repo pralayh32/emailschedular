@@ -73,6 +73,6 @@ app.post("/auth/logout", (req, res, next) => {
 });
 
 // ── Start server ────────────────────────────────────────────
-app.listen(config.port, () => {
-  console.log(`Server running on http://localhost:${config.port}`);
-});
+app.listen(config.port, '0.0.0.0', () => {
+  console.log(`Server running on http://0.0.0.0:${config.port}`)
+})
