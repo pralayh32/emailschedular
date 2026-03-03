@@ -16,4 +16,16 @@ const connection = {
   password: config.redisPassword,
 };
 
-export const emailQueue = new Queue(EMAIL_QUEUE_NAME, { connection });
+let queueInstance: Queue;
+
+try {
+  queueInstance = new Queue(EMAIL_QUEUE_NAME, { connection });
+  queueInstance.on("error", (err) => {
+    console.error("Queue error:", err.message);
+  });
+} catch (err) {
+  console.error("Queue failed to initialize:", err);
+  queueInstance = null as unknown as Queue;
+}
+
+export const emailQueue = queueInstance;

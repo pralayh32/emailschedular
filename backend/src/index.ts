@@ -6,7 +6,15 @@ import session from "express-session";
 import { config } from "./config";
 import passport from "./auth/google.strategy";
 import emailRoutes from "./routes/email.routes";
-import "./workers/email.worker";
+
+let workerStarted = false;
+
+try {
+  require("./workers/email.worker");
+  workerStarted = true;
+} catch (err) {
+  console.error("Worker failed to start:", err);
+}
 
 const app = express();
 
@@ -35,7 +43,7 @@ app.use(passport.session());
 
 // ── Health check ────────────────────────────────────────────
 app.get("/health", (_req, res) => {
-  res.json({ status: "ok" });
+  res.json({ status: "ok", workerStarted });
 });
 
 // ── Email routes ────────────────────────────────────────────
