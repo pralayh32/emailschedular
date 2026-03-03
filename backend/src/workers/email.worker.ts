@@ -10,11 +10,16 @@ import {
 
 const prisma = new PrismaClient();
 
+const redisUrl = new URL(config.redisUrl);
 const connection = {
-  host: config.redisHost,
-  port: config.redisPort,
-  username: config.redisUser || "default",
-  password: config.redisPassword,
+  host: redisUrl.hostname,
+  port: Number(redisUrl.port) || 6379,
+  username: redisUrl.username || 'default',
+  password: redisUrl.password,
+  tls: redisUrl.protocol === 'rediss:' ? {
+    rejectUnauthorized: false
+  } : undefined,
+  maxRetriesPerRequest: null,
 };
 
 let worker: Worker | null = null;

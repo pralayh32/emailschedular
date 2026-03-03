@@ -3,18 +3,24 @@ import { config } from "../config";
 
 export const EMAIL_QUEUE_NAME = "email-queue";
 
-console.log("Redis connection config:", {
-  host: config.redisHost,
-  port: config.redisPort,
-  hasPassword: !!config.redisPassword,
-});
-
+const redisUrl = new URL(config.redisUrl);
 const connection = {
-  host: config.redisHost,
-  port: config.redisPort,
-  username: config.redisUser || "default",
-  password: config.redisPassword,
+  host: redisUrl.hostname,
+  port: Number(redisUrl.port) || 6379,
+  username: redisUrl.username || 'default',
+  password: redisUrl.password,
+  tls: redisUrl.protocol === 'rediss:' ? {
+    rejectUnauthorized: false
+  } : undefined,
+  maxRetriesPerRequest: null,
 };
+
+console.log("Redis connection config:", {
+  host: connection.host,
+  port: connection.port,
+  hasPassword: !!connection.password,
+  tls: !!connection.tls,
+});
 
 let queueInstance: Queue;
 
