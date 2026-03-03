@@ -1,7 +1,7 @@
 import "dotenv/config";
 
 export const config = {
-  port: Number(process.env.PORT) || 4000,
+  port: Number(process.env.PORT) || 8080,
   redisUrl: process.env.REDIS_URL || "redis://localhost:6379",
   redisHost: process.env.REDISHOST || process.env.REDIS_HOST || "localhost",
   redisPort: Number(process.env.REDISPORT || process.env.REDIS_PORT) || 6379,
