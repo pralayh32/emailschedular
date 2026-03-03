@@ -3,6 +3,10 @@ import "dotenv/config";
 export const config = {
   port: parseInt(process.env.PORT || "4000", 10),
   redisUrl: process.env.REDIS_URL || "redis://localhost:6379",
+  redisHost: process.env.REDISHOST || "localhost",
+  redisPort: Number(process.env.REDISPORT) || 6379,
+  redisPassword: process.env.REDIS_PASSWORD || undefined,
+  redisUser: process.env.REDISUSER || undefined,
   databaseUrl: process.env.DATABASE_URL!,
   googleClientId: process.env.GOOGLE_CLIENT_ID!,
   googleClientSecret: process.env.GOOGLE_CLIENT_SECRET!,
